@@ -6,8 +6,12 @@ class TimetableResponse(BaseModel):
     course_id: int
     venue_id: int
     invigilator_id: int
-    exam_date: str
+
+    allocated_students: int
+
+    exam_day: str
     exam_time: str
+
     status: str
 
     class Config:

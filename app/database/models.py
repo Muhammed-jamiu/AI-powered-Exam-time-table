@@ -29,15 +29,34 @@ class Venue(Base):
     __tablename__ = "venues"
 
     id = Column(Integer, primary_key=True, index=True)
+
     name = Column(String)
     capacity = Column(Integer)
+
+    building = Column(String)
+
+    status = Column(String, default="Available")
 
 
 class Invigilator(Base):
     __tablename__ = "invigilators"
 
     id = Column(Integer, primary_key=True, index=True)
+
+    staff_id = Column(String, unique=True)
+
     name = Column(String)
+
+    department = Column(String)
+
+    phone = Column(String)
+
+    email = Column(String)
+
+    status = Column(
+        String,
+        default="Available"
+    )
 
 
 class Timetable(Base):
@@ -45,15 +64,28 @@ class Timetable(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    course_id = Column(Integer, ForeignKey("courses.id"))
+    course_id = Column(
+        Integer,
+        ForeignKey("courses.id")
+    )
 
-    exam_date = Column(String)
-    exam_time = Column(String)
-
-    venue_id = Column(Integer, ForeignKey("venues.id"))
+    venue_id = Column(
+        Integer,
+        ForeignKey("venues.id")
+    )
 
     invigilator_id = Column(
         Integer,
         ForeignKey("invigilators.id")
     )
-    status = Column(String, default="scheduled")
+
+    allocated_students = Column(Integer)
+
+    exam_day = Column(String)
+
+    exam_time = Column(String)
+
+    status = Column(
+        String,
+        default="Scheduled"
+    )
