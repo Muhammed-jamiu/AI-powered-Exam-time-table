@@ -28,7 +28,6 @@ def create_invigilator(
         name=invigilator.name,
         department=invigilator.department,
         phone=invigilator.phone,
-        email=invigilator.email,
         status=invigilator.status
     )
 
@@ -49,3 +48,30 @@ def get_invigilators(
     return db.query(
         Invigilator
     ).all()
+
+@router.delete("/{invigilator_id}")
+def delete_invigilator(
+    invigilator_id: int,
+    db: Session = Depends(get_db)
+):
+    invigilator = (
+        db.query(Invigilator)
+        .filter(
+            Invigilator.id == invigilator_id
+        )
+        .first()
+    )
+
+    if not invigilator:
+        return {
+            "message":
+            "Invigilator not found"
+        }
+
+    db.delete(invigilator)
+    db.commit()
+
+    return {
+        "message":
+        "Invigilator deleted successfully"
+    }    

@@ -46,3 +46,28 @@ def get_courses(
     db: Session = Depends(get_db)
 ):
     return db.query(Course).all()
+
+
+
+@router.delete("/{course_id}")
+def delete_course(
+    course_id: int,
+    db: Session = Depends(get_db)
+):
+    course = (
+        db.query(Course)
+        .filter(Course.id == course_id)
+        .first()
+    )
+
+    if not course:
+        return {
+            "message": "Course not found"
+        }
+
+    db.delete(course)
+    db.commit()
+
+    return {
+        "message": "Course deleted successfully"
+    }

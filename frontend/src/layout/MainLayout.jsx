@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 function MainLayout({ children }) {
   return (
     <div className="d-flex">
-      <Sidebar />
+      <Sidebar className="width-250" />
 
       <div
         className="flex-grow-1"
@@ -15,7 +15,17 @@ function MainLayout({ children }) {
       >
         <Navbar />
 
-        <div className="container-fluid p-4">{children}</div>
+        <div
+          style={{
+            marginLeft: "250px",
+            marginTop: "60px",
+            padding: "20px",
+            height: "calc(100vh - 60px)",
+            overflowY: "auto",
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

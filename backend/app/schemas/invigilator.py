@@ -6,7 +6,7 @@ class InvigilatorCreate(BaseModel):
     name: str
     department: str
     phone: str
-    email: str
+    
     status: str = "Available"
 
 

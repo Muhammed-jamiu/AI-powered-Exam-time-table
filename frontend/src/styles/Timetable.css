@@ -1,0 +1,28 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .print-section,
+  .print-section * {
+    visibility: visible;
+  }
+
+  .print-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .btn,
+  .sidebar,
+  .navbar {
+    display: none !important;
+  }
+}
+
+.timetable-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.65;
+}

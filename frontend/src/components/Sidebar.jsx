@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import "../styles/Sidebar.css";
 
 function Sidebar() {
   return (
@@ -7,51 +8,79 @@ function Sidebar() {
       style={{
         width: "250px",
         minHeight: "100vh",
+        position: "fixed",
+        top: "60px",
+        left: 0,
+        height: "calc(100vh - 60px)",
+        overflowY: "auto",
       }}
     >
       <h4 className="mb-4">AI Exam</h4>
 
       <ul className="nav flex-column">
         <li className="nav-item mb-3">
-          <Link className="nav-link text-white" to="/pages/dashboard">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+            to="/pages/dashboard"
+          >
             Dashboard
-          </Link>
+          </NavLink>
         </li>
 
         <li className="nav-item mb-3">
-          <Link className="nav-link text-white" to="/pages/courses">
+          <NavLink
+            to="/pages/courses"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             Courses
-          </Link>
+          </NavLink>
         </li>
 
         <li className="nav-item mb-3">
-          <Link className="nav-link text-white" to="/pages/venues">
+          <NavLink
+            to="/pages/venues"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             Venues
-          </Link>
+          </NavLink>
         </li>
 
         <li className="nav-item mb-3">
-          <Link className="nav-link text-white" to="/pages/invigilators">
+          <NavLink
+            to="/pages/invigilators"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             Invigilators
-          </Link>
+          </NavLink>
         </li>
 
         <li className="nav-item mb-3">
-          <Link className="nav-link text-white" to="/pages/timetable">
+          <NavLink
+            to="/pages/timetable"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
             Timetable
-          </Link>
+          </NavLink>
         </li>
         <li className="nav-item mb-3">
-          <Link
-            style={{
-              color: "red",
-              padding: "20px",
-              marginTop: "100px",
-            }}
-            to="/logout"
+          <NavLink
+            to="/pages/logout"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link text-danger "
+            }
           >
             Logout
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>

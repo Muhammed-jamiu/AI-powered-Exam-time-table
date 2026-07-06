@@ -51,8 +51,6 @@ class Invigilator(Base):
 
     phone = Column(String)
 
-    email = Column(String)
-
     status = Column(
         String,
         default="Available"

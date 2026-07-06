@@ -44,3 +44,27 @@ def get_venues(
     db: Session = Depends(get_db)
 ):
     return db.query(Venue).all()
+
+@router.delete("/{venue_id}")
+def delete_venue(
+    venue_id: int,
+    db: Session = Depends(get_db)
+):
+    venue = (
+        db.query(Venue)
+        .filter(Venue.id == venue_id)
+        .first()
+    )
+
+    if not venue:
+        return {
+            "message": "Venue not found"
+        }
+
+    db.delete(venue)
+    db.commit()
+
+    return {
+        "message":
+            "Venue deleted successfully"
+    }

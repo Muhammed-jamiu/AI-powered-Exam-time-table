@@ -1,0 +1,16 @@
+.sidebar-link {
+  display: block;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-link.active {
+  border-bottom: 3px solid #198754;
+  font-weight: bold;
+}
