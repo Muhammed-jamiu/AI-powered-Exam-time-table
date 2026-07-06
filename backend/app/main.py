@@ -7,6 +7,7 @@ from app.routes.venue import router as venue_router
 from app.routes.invigilator import router as invigilator_router
 import app.routes.timetable as timetable_router
 import app.routes.dashboard as dashboard_router
+from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)
 
@@ -15,6 +16,14 @@ app = FastAPI(
     title="AI Exam Timetable System",
     version="1.0.0"
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+   
 
 app.include_router(course_router)
 app.include_router(venue_router)
