@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from .db import Base
+from sqlalchemy import DateTime
+from datetime import datetime
 
 
 class Department(Base):
@@ -57,6 +59,10 @@ class Invigilator(Base):
     )
 
 
+
+
+
+
 class Timetable(Base):
     __tablename__ = "timetable"
 
@@ -86,4 +92,38 @@ class Timetable(Base):
     status = Column(
         String,
         default="Scheduled"
+    )
+
+
+class ExamOfficer(Base):
+    __tablename__ = "exam_officers"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    full_name = Column(String, nullable=False)
+
+    employee_id = Column(
+        String,
+        unique=True,
+        nullable=False
+    )
+
+    email = Column(
+        String,
+        unique=True,
+        nullable=False
+    )
+
+    phone = Column(String)
+
+    password = Column(String, nullable=False)
+
+    role = Column(
+        String,
+        default="Exam Officer"
+    )
+
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow
     )

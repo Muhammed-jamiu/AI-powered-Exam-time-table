@@ -8,6 +8,7 @@ from app.routes.invigilator import router as invigilator_router
 import app.routes.timetable as timetable_router
 import app.routes.dashboard as dashboard_router
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes.auth import router as auth_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -30,6 +31,7 @@ app.include_router(venue_router)
 app.include_router(invigilator_router)
 app.include_router(timetable_router.router)
 app.include_router(dashboard_router.router)
+app.include_router(auth_router)
 
 @app.get("/")
 def home():
