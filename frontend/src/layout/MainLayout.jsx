@@ -1,31 +1,33 @@
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function MainLayout({ children }) {
   return (
     <div className="d-flex">
-      <Sidebar className="width-250" />
+      <Sidebar />
 
       <div
-        className="flex-grow-1"
+        className="d-flex flex-column flex-grow-1"
         style={{
+          marginLeft: "250px",
           minHeight: "100vh",
           background: "#f5f7fa",
         }}
       >
         <Navbar />
 
-        <div
+        <main
+          className="flex-grow-1"
           style={{
-            marginLeft: "250px",
             marginTop: "60px",
             padding: "20px",
-            height: "calc(100vh - 60px)",
-            overflowY: "auto",
           }}
         >
           {children}
-        </div>
+        </main>
+
+        <Footer />
       </div>
     </div>
   );

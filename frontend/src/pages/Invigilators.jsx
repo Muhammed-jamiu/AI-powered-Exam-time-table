@@ -11,6 +11,8 @@ function Invigilators() {
 
   const [selectedInvigilator, setSelectedInvigilator] = useState(null);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [formData, setFormData] = useState({
     staff_id: "",
     name: "",
@@ -46,6 +48,8 @@ function Invigilators() {
     try {
       await api.post("/invigilators/", formData);
 
+      setErrorMessage("");
+
       setFormData({
         staff_id: "",
         name: "",
@@ -59,6 +63,16 @@ function Invigilators() {
       alert("Invigilator added successfully");
     } catch (error) {
       console.log(error);
+
+      if (error.response) {
+        setErrorMessage(
+          error.response.data.detail ||
+            error.response.data.message ||
+            "Something went wrong.",
+        );
+      } else {
+        setErrorMessage("Staff ID already exists.");
+      }
     }
   };
 
@@ -78,16 +92,20 @@ function Invigilators() {
 
   const filteredInvigilators = invigilators.filter(
     (invigilator) =>
-      invigilator.name.toLowerCase().includes(search.toLowerCase()) ||
-      invigilator.staff_id.toLowerCase().includes(search.toLowerCase()) ||
-      invigilator.department.toLowerCase().includes(search.toLowerCase()),
+      (invigilator.name || "").toLowerCase().includes(search.toLowerCase()) ||
+      (invigilator.staff_id || "")
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      (invigilator.department || "")
+        .toLowerCase()
+        .includes(search.toLowerCase()),
   );
 
   return (
     <MainLayout>
       <h2 className="mb-4">Invigilator Management</h2>
 
-      {/* FORM */}
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
       <form onSubmit={addInvigilator} className="card p-4 mb-4">
         <div className="row">
@@ -144,7 +162,6 @@ function Invigilators() {
               onChange={handleChange}
             >
               <option>Available</option>
-
               <option>Unavailable</option>
             </select>
           </div>
@@ -154,8 +171,6 @@ function Invigilators() {
           <i className="bi bi-plus-circle"></i> Add Invigilator
         </button>
       </form>
-
-      {/* TABLE */}
 
       <div className="card">
         <div className="card-header">
@@ -183,9 +198,7 @@ function Invigilators() {
               {filteredInvigilators.map((invigilator) => (
                 <tr key={invigilator.id}>
                   <td>{invigilator.staff_id}</td>
-
                   <td>{invigilator.name}</td>
-
                   <td>{invigilator.department}</td>
 
                   <td>
@@ -205,7 +218,6 @@ function Invigilators() {
                       className="btn btn-danger btn-sm"
                       onClick={() => {
                         setSelectedInvigilator(invigilator);
-
                         setShowModal(true);
                       }}
                     >
@@ -218,8 +230,6 @@ function Invigilators() {
           </table>
         </div>
       </div>
-
-      {/* DELETE MODAL */}
 
       {showModal && (
         <div
@@ -245,9 +255,7 @@ function Invigilators() {
 
                 <div className="alert alert-warning">
                   <strong>{selectedInvigilator?.name}</strong>
-
                   <br />
-
                   {selectedInvigilator?.staff_id}
                 </div>
               </div>

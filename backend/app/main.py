@@ -9,6 +9,9 @@ import app.routes.timetable as timetable_router
 import app.routes.dashboard as dashboard_router
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.auth import router as auth_router
+from app.routes.history import router as history_router
+
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +35,7 @@ app.include_router(invigilator_router)
 app.include_router(timetable_router.router)
 app.include_router(dashboard_router.router)
 app.include_router(auth_router)
+app.include_router(history_router)
 
 @app.get("/")
 def home():

@@ -14,6 +14,8 @@ function Venues() {
   const [formData, setFormData] = useState({
     name: "",
     capacity: "",
+    building: "",
+    status: "Available",
   });
 
   useEffect(() => {
@@ -46,6 +48,8 @@ function Venues() {
       setFormData({
         name: "",
         capacity: "",
+        building: "",
+        status: "Available",
       });
 
       fetchVenues();
@@ -103,6 +107,29 @@ function Venues() {
               onChange={handleChange}
               required
             />
+          </div>
+          <div className="col-md-6 mb-3">
+            <input
+              className="form-control"
+              placeholder="Building"
+              name="building"
+              value={formData.building}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="col-md-6 mb-3">
+            <select
+              className="form-select"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              <option value="Available">Available</option>
+              <option value="Occupied">Occupied</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
           </div>
         </div>
 

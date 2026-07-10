@@ -1,18 +1,20 @@
 from pydantic import BaseModel
 
-
 class InvigilatorCreate(BaseModel):
     staff_id: str
     name: str
     department: str
     phone: str
-    status: str = "Available"
+    status: str
 
 
-class InvigilatorResponse(
-    InvigilatorCreate
-):
+class InvigilatorResponse(BaseModel):
     id: int
+    staff_id: str
+    name: str
+    department: str
+    phone: str
+    status: str
 
     class Config:
         from_attributes = True

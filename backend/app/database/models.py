@@ -94,6 +94,38 @@ class Timetable(Base):
         default="Scheduled"
     )
 
+class TimetableHistory(Base):
+    __tablename__ = "timetable_history"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    department = Column(String)
+
+    semester = Column(String)
+
+    session = Column(String)
+
+    total_exams = Column(Integer)
+
+    generated_at = Column(
+        DateTime,
+        default=datetime.utcnow
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ExamOfficer(Base):
     __tablename__ = "exam_officers"

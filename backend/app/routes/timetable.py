@@ -10,7 +10,8 @@ from app.database.models import (
     Timetable,
     Course,
     Venue,
-    Invigilator
+    Invigilator,
+     TimetableHistory
 )
 
 router = APIRouter(
@@ -22,7 +23,23 @@ router = APIRouter(
 @router.post("/generate")
 def generate(db: Session = Depends(get_db)):
 
+    # Generate timetable
     data = generate_exam_timetable(db)
+
+    # Get one course to obtain department and semester
+    first_course = db.query(Course).first()
+
+    if first_course:
+        
+        history = TimetableHistory(
+            department=first_course.department,
+            semester=first_course.semester,
+            session="2025/2026",
+            total_exams=len(data)
+        )
+
+        db.add(history)
+        db.commit()
 
     return {
         "message": "Timetable generated successfully",
