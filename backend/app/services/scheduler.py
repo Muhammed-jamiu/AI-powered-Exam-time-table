@@ -2,7 +2,8 @@ from app.database.models import (
     Course,
     Venue,
     Invigilator,
-    Timetable
+    Timetable,
+    TimetableHistory,
 )
 
 TIME_SLOTS = [
@@ -25,20 +26,31 @@ TIME_SLOTS = [
 
 def generate_exam_timetable(db):
 
-    # clear old timetable
-    db.query(Timetable).delete()
-    db.commit()
-
+    # Get all data
     courses = db.query(Course).all()
-
     venues = db.query(Venue).all()
-
     invigilators = db.query(Invigilator).all()
 
-    # largest venue first
+    # Stop if no data exists
+    if not courses or not venues or not invigilators:
+        return []
+
+    # Save timetable generation history
+    history = TimetableHistory(
+        department=courses[0].department,
+        semester=courses[0].semester,
+        session="2025/2026",
+        total_exams=len(courses),
+    )
+
+    db.add(history)
+    db.commit()
+    db.refresh(history)
+
+    # Sort venues from largest to smallest
     venues.sort(
         key=lambda v: v.capacity,
-        reverse=True
+        reverse=True,
     )
 
     slot_index = 0
@@ -62,25 +74,21 @@ def generate_exam_timetable(db):
 
             allocated = min(
                 remaining_students,
-                venue.capacity
+                venue.capacity,
             )
 
             invigilator = invigilators[
-                invigilator_index %
-                len(invigilators)
+                invigilator_index % len(invigilators)
             ]
 
             timetable = Timetable(
                 course_id=course.id,
                 venue_id=venue.id,
                 invigilator_id=invigilator.id,
-
                 allocated_students=allocated,
-
                 exam_day=exam_day,
                 exam_time=exam_time,
-
-                status="Scheduled"
+                status="Scheduled",
             )
 
             db.add(timetable)

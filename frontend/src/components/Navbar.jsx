@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import LogoutModal from "./LogoutModal";
-
+import adminImage from "../assets/me_admin.png";
 function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -20,7 +20,7 @@ function Navbar() {
       className="navbar bg-white shadow-sm px-4 d-flex justify-content-between fixed-top"
       style={{ height: "60px", zIndex: 1000 }}
     >
-      <h4 className="mb-0">AI Exam Timetable System</h4>
+      <h4 className="mb-0">🎓AI Exam Timetable System</h4>
 
       <div
         className="position-relative"
@@ -34,7 +34,20 @@ function Navbar() {
             gap: "10px",
           }}
         >
-          <FaUserCircle size={30} color="#198754" />
+          {/* <FaUserCircle size={30} color="#198754" /> */}
+          <img
+            src={adminImage}
+            width={30}
+            height={30}
+            alt="Admin"
+            className="img-fluid "
+            style={{
+              borderRadius: "100%",
+              objectFit: "cover",
+              borderColor: "red",
+              border: "2px solid #198754",
+            }}
+          />
 
           <div>
             <strong>Exam Officer</strong>

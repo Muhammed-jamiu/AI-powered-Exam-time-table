@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/auth";
+import fpnImage from "../../assets/fpn_logo.png";
 
 export default function Login() {
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,15 +32,26 @@ export default function Login() {
 
       navigate("/pages/dashboard");
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
+
+      setError("Invalid email or password");
     }
   };
 
   return (
     <div className="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
       <div className="card shadow p-4" style={{ width: "450px" }}>
+        <img
+          src={fpnImage}
+          alt="FPN Logo"
+          width={160}
+          height={160}
+          className="d-block mx-auto mb-3"
+        />
         <h2 className="text-center mb-4">Exam Officer Login</h2>
-
+        <div className="text-center ">
+          <p className="text-danger">{error}</p>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Email</label>

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { signup } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import fpnImage from "../../assets/fpn_logo.png";
 
 export default function Signup() {
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     full_name: "",
     employee_id: "",
@@ -32,15 +34,34 @@ export default function Signup() {
 
       navigate("/auth/login");
     } catch (error) {
-      alert(error.message);
+      setError("Employee ID or Email already exists");
     }
   };
 
   return (
-    <div className="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
-      <div className="card shadow p-4" style={{ width: "500px" }}>
+    <div
+      className="container-fluid  d-flex justify-content-center align-items-center bg-light"
+      style={{
+        minHeight: "100vh",
+        paddingTop: "60px",
+        paddingBottom: "60px",
+      }}
+    >
+      <div
+        className="card shadow p-4"
+        style={{ width: "500px", borderRadius: "12px" }}
+      >
+        <img
+          src={fpnImage}
+          alt="FPN Logo"
+          width={160}
+          height={160}
+          className="d-block mx-auto mb-0"
+        />
         <h2 className="text-center mb-4">Exam Officer Signup</h2>
-
+        <div className="text-center text-danger">
+          <p>{error}</p>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Full Name</label>
@@ -51,6 +72,7 @@ export default function Signup() {
               name="full_name"
               value={formData.full_name}
               onChange={handleChange}
+              placeholder="Enter your full name"
               required
             />
           </div>
@@ -64,6 +86,7 @@ export default function Signup() {
               name="employee_id"
               value={formData.employee_id}
               onChange={handleChange}
+              placeholder="Enter your ID number(e.g, FPN/2001/CSC/001)"
               required
             />
           </div>
@@ -77,6 +100,7 @@ export default function Signup() {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              placeholder="Enter your email address"
               required
             />
           </div>
@@ -90,6 +114,7 @@ export default function Signup() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              placeholder="Enter your phone number"
               required
             />
           </div>
@@ -103,6 +128,7 @@ export default function Signup() {
               name="password"
               value={formData.password}
               onChange={handleChange}
+              placeholder="Enter a strong password"
               required
             />
           </div>
