@@ -20,7 +20,7 @@ function Navbar() {
       className="navbar bg-white shadow-sm px-4 d-flex justify-content-between fixed-top"
       style={{ height: "60px", zIndex: 1000 }}
     >
-      <h4 className="mb-0">🎓AI Exam Timetable System</h4>
+      <h4 className="mb-0">🎓Timetable Planner</h4>
 
       <div
         className="position-relative"
