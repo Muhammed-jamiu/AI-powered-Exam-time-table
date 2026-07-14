@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout";
 import api from "../api/api";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function History() {
   const [history, setHistory] = useState([]);
 
@@ -40,12 +42,12 @@ function History() {
 
   //download pdf file
   const downloadPdf = (id) => {
-    window.open(`http://127.0.0.1:8000/history/${id}/pdf`, "_blank");
+    window.open(`${API_URL}/history/${id}/pdf`, "_blank");
   };
 
   //download excel file
   const downloadExcel = (id) => {
-    window.open(`http://127.0.0.1:8000/history/${id}/excel`, "_blank");
+    window.open(`${API_URL}/history/${id}/excel`, "_blank");
   };
 
   return (
