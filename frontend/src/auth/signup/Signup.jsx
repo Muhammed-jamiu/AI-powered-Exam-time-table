@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import fpnImage from "../../assets/fpn_logo.png";
 
 export default function Signup() {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     full_name: "",
@@ -25,6 +26,9 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await signup(formData);
 
@@ -34,7 +38,9 @@ export default function Signup() {
 
       navigate("/auth/login");
     } catch (error) {
-      setError("Employee ID or Email already exists");
+      setError(error.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -133,8 +139,23 @@ export default function Signup() {
             />
           </div>
 
-          <button className="btn btn-primary w-100" type="submit">
-            Create Account
+          <button
+            className="btn btn-primary w-100"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span
+                  className="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Creating Account...
+              </>
+            ) : (
+              "Create Account"
+            )}
           </button>
         </form>
 

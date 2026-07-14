@@ -4,6 +4,7 @@ import { login } from "../../api/auth";
 import fpnImage from "../../assets/fpn_logo.png";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
@@ -22,6 +23,9 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await login(formData);
 
@@ -34,10 +38,11 @@ export default function Login() {
     } catch (error) {
       console.log(error.message);
 
-      setError("Invalid email or password");
+      setError(error.message || "Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <div className="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
       <div className="card shadow p-4" style={{ width: "450px" }}>
@@ -81,8 +86,23 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">
-            Login
+          <button
+            type="submit"
+            className="btn btn-primary w-100"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span
+                  className="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 
