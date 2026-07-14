@@ -1,53 +1,21 @@
-const BASE_URL = "http://127.0.0.1:8000";
+import api from "./api";
 
 export async function signup(userData) {
-  const response = await fetch(`${BASE_URL}/auth/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.detail || "Signup failed");
-  }
-
+  const { data } = await api.post("/auth/signup", userData);
   return data;
 }
 
 export async function login(credentials) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.detail || "Login failed");
-  }
-
+  const { data } = await api.post("/auth/login", credentials);
   return data;
 }
 
 export async function getCurrentUser(token) {
-  const response = await fetch(`${BASE_URL}/auth/me`, {
+  const { data } = await api.get("/auth/me", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.detail || "Unauthorized");
-  }
 
   return data;
 }
